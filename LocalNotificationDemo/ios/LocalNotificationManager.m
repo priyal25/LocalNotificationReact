@@ -23,11 +23,11 @@ RCT_EXPORT_METHOD(fireNotification:(NSString *)name)
 {
  
   UILocalNotification *notification = [[UILocalNotification alloc] init];
-  notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
   notification.alertBody = name;
   notification.timeZone = [NSTimeZone defaultTimeZone];
   notification.soundName = UILocalNotificationDefaultSoundName;
-  
+  notification.fireDate = [NSDate date];
+
   [[UIApplication sharedApplication] scheduleLocalNotification:notification];
   
   RCTLogInfo(@"Pretending to create an event %@ at", name);
