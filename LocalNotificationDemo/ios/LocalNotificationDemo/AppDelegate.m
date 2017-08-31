@@ -12,6 +12,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -33,16 +34,21 @@
   [self.window makeKeyAndVisible];
   
   [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+  
+  [UNUserNotificationCenter currentNotificationCenter].delegate = self;
 
   return YES;
 }
 
+//MARK: - UNUserNotificationCenterDelegate Methods
 
--(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-  
-  UIAlertView *notificationAlert = [[UIAlertView alloc] initWithTitle:@"Received Notification" message:notification.alertBody delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-  
-  [notificationAlert show];
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+    completionHandler(UNNotificationPresentationOptionAlert + UNNotificationPresentationOptionSound);
 }
+
+
 
 @end
